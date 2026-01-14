@@ -44,6 +44,7 @@ newTopicForm.addEventListener("submit", (event) => {
         addTopicToPage(topicValue, topicList);
 })
 
+
 /*
 HTML for list topic list item
 <li class="list-group-item">
