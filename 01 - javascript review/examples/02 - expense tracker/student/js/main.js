@@ -69,7 +69,7 @@ document.getElementById("expense-form-add").addEventListener("submit", function 
         //If the text on the button isn't Add Expense...
 
             //I DON'T UNDERSTAND HOW THIS LINE WORKS:
-        const expenseId = parseInt(document.getElementById("expense-id"));
+        const expenseId = parseInt(document.getElementById("expense-id").value);
 
         //We are selecting the expense in our array, 
         const expenseToEdit = theExpenses.find((expense) => expense.id === expenseId);
@@ -101,4 +101,34 @@ document.getElementById("searchbox").addEventListener("input", function (event) 
     const filteredExpenses = theExpenses.filter((expense) => expense.title.toLowerCase().includes(searchTerm));
 
     renderExpenses(filteredExpenses);
+});
+
+//7. Add an eventListener to the entire container of items, then differentiate between click events to fire specific logic.
+
+expenseContainer.addEventListener("click", function(event) {
+
+    //Look for the Edit button click OR look for the Delete button click
+    if (event.target.classList.contains("delete-btn")) {
+        const expenseId = parseInt(event.target.id);
+
+        const expenseIndex = theExpenses.findIndex((expense => expense.id === expenseId)) ;
+    if (expenseIndex != -1) {
+
+        theExpenses.splice(expenseIndex, 1);
+        renderExpenses(theExpenses);
+    }
+    } else if (event.target.classList.contains("edit-btn")) {
+        const expenseId = parseInt(event.target.id);
+        const expenseToEdit = theExpenses.find((expense) => expense.id === expenseId);
+        
+        if (expenseToEdit) {
+            document.getElementById("title").value = expenseToEdit.title;
+            document.getElementById("category").value = expenseToEdit.category;
+            document.getElementById("date").value = expenseToEdit.date;
+            document.getElementById("amount").value = expenseToEdit.amount;
+            document.getElementById("expense-id").value = expenseToEdit.id;
+
+            document.getElementById("submitter").innerText = "Save Changes";
+        }
+    }
 })
