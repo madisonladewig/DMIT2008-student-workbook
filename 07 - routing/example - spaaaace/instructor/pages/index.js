@@ -1,5 +1,12 @@
+// react hooks
+import { useState, useEffect } from 'react';
+
+import { getAgencies } from '@utils/api/agencies'
+
+// nextjs components
 import Head from 'next/head'
 
+// mui components
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
@@ -9,6 +16,24 @@ import NavBar from '@components/NavBar';
 
 
 export default function Home() {
+
+  const [agenciesData, setAgenciesData] = useState([])
+
+  useEffect(
+    // param1: callback / logic that should fire
+    () => {
+
+      getAgencies().then(
+        (data) => {
+          console.log(data)
+          setAgenciesData(data)
+        }
+      )
+
+    },
+    // param 2: dependency array (here: empty, only fire when component mounts)
+    []
+  )
 
   return (
     <div>
